@@ -17,10 +17,6 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-sequelize.authenticate()
-  .then(() => logger.info("Connection to postgresql established"))
-  .catch((err) => logger.fatal("failed to connect to postgresql server"))
-
 fs
   .readdirSync(__dirname)
   .filter(file => {
