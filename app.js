@@ -14,7 +14,9 @@ app.use("/api/v1", routers)
 
 //healthcheck handler
 //useful to utilized on readiness and liveness probes in container orchestration deployment such as kubernetes
-app.get("/healthcheck", (req, res) => res.sendStatus(200))
+app.get("/", (req, res) => res.json({
+    message: "Express run on vercel Horray"
+}))
 
 //not found error handler
 app.use((req, res, next) => {
