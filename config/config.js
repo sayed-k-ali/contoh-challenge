@@ -7,7 +7,7 @@ module.exports = {
     "database": "bingle-shop",
     "host": "binar-psql-db-6765.6xw.aws-ap-southeast-1.cockroachlabs.cloud",
     port: "26257",
-    "dialect": "postgres",
+    "dialect": "postgresql",
     dialectOptions: {
       ssl: {
         require: true,
@@ -23,7 +23,7 @@ module.exports = {
     "database": "bingle-shop",
     "host": "binar-psql-db-6765.6xw.aws-ap-southeast-1.cockroachlabs.cloud",
     port: "26257",
-    "dialect": "postgres",
+    "dialect": "postgresql",
     dialectOptions: {
       ssl: {
         require: true,
