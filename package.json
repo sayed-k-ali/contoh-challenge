@@ -2,9 +2,9 @@
   "name": "binar-challenge-platinum",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node index.js",
     "test": "jest",
     "integration": "jest --testRegex \".api-test.js$\" --detectOpenHandles --forceExit"
   },
