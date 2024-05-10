@@ -8,6 +8,7 @@ module.exports = {
     "host": "binar-psql-db-6765.6xw.aws-ap-southeast-1.cockroachlabs.cloud",
     port: "26257",
     "dialect": "postgresql",
+    dialectModule: require('pg'),
     dialectOptions: {
       ssl: {
         require: true,
@@ -24,6 +25,7 @@ module.exports = {
     "host": "binar-psql-db-6765.6xw.aws-ap-southeast-1.cockroachlabs.cloud",
     port: "26257",
     "dialect": "postgresql",
+    dialectModule: require('pg'),
     dialectOptions: {
       ssl: {
         require: true,
