@@ -1,7 +1,7 @@
 require('dotenv').config()
 const fs = require('fs')
 module.exports = {
-  "development": {
+  "production": {
     "username": "binar-psql-db",
     "password": "4GZfP_X1DS00SiOAhRl4Yw",
     "database": "bingle-shop",
@@ -17,19 +17,4 @@ module.exports = {
     }
 
   },
-  "test": {
-    "username": "postgres",
-    "password": "SuperAdmin",
-    "database": "binar_platinum_test",
-    "host": "127.0.0.1",
-    "dialect": "postgres",
-    logging: false,
-  },
-  "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  }
 }
