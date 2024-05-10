@@ -10,6 +10,8 @@ const port = process.env.PORT || 3000;
 
 server.listen(port, () => logger.info(null, "server listen on port %d", port))
 
+console.log("Not run")
+
 process.on('SIGINT', () => {
     server.close((err) => {
         if (err) {

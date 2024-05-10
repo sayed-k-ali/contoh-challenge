@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const logger = require('./libs/logger');
 const { pinoHttp } = require('pino-http');
 const routers = require('./routers');
 
@@ -15,7 +14,7 @@ app.use("/api/v1", routers)
 
 //healthcheck handler
 //useful to utilized on readiness and liveness probes in container orchestration deployment such as kubernetes
-app.get("/healthcheck", (req, res) => setTimeout(() => res.sendStatus(200), 10000))
+app.get("/healthcheck", (req, res) => res.sendStatus(200))
 
 //not found error handler
 app.use((req, res, next) => {
@@ -32,9 +31,5 @@ app.use((err, req, res, next) => {
         data: err.data
     })
 })
-
-// module.exports = app.listen(port, () => {
-//     logger.info(null, "Server run on port %d", port)
-// })
 
 module.exports = app
