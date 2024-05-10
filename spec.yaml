@@ -1,0 +1,101 @@
+apiPrefix: /api/v1
+endpoints:
+- /users/login:
+    body:
+      - email
+      - password
+    return:
+      - token
+- /users/register:
+    body:
+      - email
+      - password
+      - fullname
+      - is_admin 
+    return:
+      - message
+
+# admin endpoint
+- /items/admin/create:
+    authenticated: yes
+    authorized: admin
+    body:
+      - name
+      - price
+      - image_url
+    return:
+      - message
+- /items/admin/list:
+    authenticated: yes
+    authorized: admin
+    body: 
+      -
+    return:
+      data:
+        - item1:
+          - name
+          - price
+          - image_url
+- /items/admin/get/:id:
+    authenticated: yes
+    authorized: admin
+    body: 
+      -
+    return:
+      data:
+        item1:
+          - name
+          - price
+          - image_url
+- /items/admin/change/:id:
+    authenticated: yes
+    authorized: admin
+    body:
+      - price
+      - image_url
+- /items/admin/delete/:id:
+    authenticated: yes
+    authorized: admin
+    body:
+      - 
+    return:
+      - message
+- /items/list:
+    query: 
+      - name
+      - price
+    return:
+      data:
+        - item1:
+          - id
+          - name
+          - price
+          - image_url
+- /orders/list:
+    authenticated: yes
+    authorized: user
+    body:
+      - 
+    return:
+      data:
+        - order1:
+          - id
+          - total_price
+          - total_quantity
+- /orders/create:
+    authenticated: yes
+    authorized: user
+    body:
+      - item1
+      - item2
+      - itemn
+    return:
+      - message
+- /orders/:id/finish:
+    authenticated: yes
+    authorized: user
+    body:
+      - 
+    return:
+      - data:
+        - order
