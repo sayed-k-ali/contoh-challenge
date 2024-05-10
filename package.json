@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "jest",
     "integration": "jest --testRegex \".api-test.js$\" --detectOpenHandles --forceExit"
   },
