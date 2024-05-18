@@ -52,6 +52,10 @@ jobs:
         npx sequelize db:migrate
       env:
         NODE_ENV: test
+        POSTGRES_USER: ${{ env.POSTGRES_USER }}
+        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
+        POSTGRES_DB: ${{ env.POSTGRES_DB }}
 
     - name: Run integration test
       run: npm run integration
