@@ -27,7 +27,51 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm install --silent
-    - run: npm test
+
+    - name: Store the npm result to artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-artifact
+        path: .
+
+  integration-test:
+    runs-on: ubuntu-latest
+    container: node:20
+    needs: build
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+    steps:
+      - name: Retrieve build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+      - name: Run sequelize module to create database and migration
+        run: |
+          npx sequelize db:create
+          npx sequelize db:migrate
+        env:
+          NODE_ENV: test
+      - name: Run integration test
+        run: npm run integration
+        env:
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+      
+
 
   # deploy:
   #   runs-on: ubuntu-latest

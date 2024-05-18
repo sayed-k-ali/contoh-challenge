@@ -36,20 +36,11 @@ module.exports = {
 
   },
   "test": {
-    "username": "binar-psql-db",
-    "password": "4GZfP_X1DS00SiOAhRl4Yw",
-    "database": "bingle-shop",
-    "host": "binar-psql-db-6765.6xw.aws-ap-southeast-1.cockroachlabs.cloud",
-    port: "26257",
-    "dialect": "postgresql",
-    dialectModule: require('pg'),
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: true,
-        ca: fs.readFileSync(__dirname + '/root.crt').toString(),
-      }
-    }
-
+    "username": process.env.POSTGRESS_USER,
+    "password": process.env.POSTGRES_PASSWORD,
+    "database": process.env.POSTGRESS_DB,
+    "host": process.env.POSTGRES_HOST,
+    "port": "5432",
+    "dialect": "postgres",
   },
 }

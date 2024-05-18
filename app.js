@@ -5,7 +5,7 @@ const routers = require('./routers');
 
 const app = express();
 
-if (!process.env.NODE_ENV==='test'){
+if (process.env.NODE_ENV !=='test'){
     app.use(pinoHttp())
 }
 
