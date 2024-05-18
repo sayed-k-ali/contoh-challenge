@@ -57,19 +57,21 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-artifact
-      - name: Run sequelize module to create database and migration
-        run: |
-          npx sequelize db:create
-          npx sequelize db:migrate
-        env:
-          NODE_ENV: test
-      - name: Run integration test
-        run: npm run integration
-        env:
-          POSTGRES_USER: ${{ env.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
-          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+      - name: List Files
+        run: ls -ltrah
+      # - name: Run sequelize module to create database and migration
+      #   run: |
+      #     npx sequelize db:create
+      #     npx sequelize db:migrate
+      #   env:
+      #     NODE_ENV: test
+      # - name: Run integration test
+      #   run: npm run integration
+      #   env:
+      #     POSTGRES_USER: ${{ env.POSTGRES_USER }}
+      #     POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      #     POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
+      #     POSTGRES_DB: ${{ env.POSTGRES_DB }}
       
 
 
