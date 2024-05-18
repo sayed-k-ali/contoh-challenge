@@ -59,6 +59,8 @@ jobs:
           name: build-artifact
       - name: List Files
         run: ls -ltrah
+      - name: Run unit testing
+        run: npm test
       # - name: Run sequelize module to create database and migration
       #   run: |
       #     npx sequelize db:create
