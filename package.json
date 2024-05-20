@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "jest --testRegex \".api-test.js$\" --detectOpenHandles --forceExit"
+    "test": "jest",
+    "integration": "jest --testRegex \".api-test.js$\" --detectOpenHandles --forceExit"
   },
   "keywords": [],
   "author": "",
