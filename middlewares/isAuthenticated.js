@@ -17,12 +17,15 @@ module.exports = async (req, res, next) => {
     }
 
     const accessToken = bearerToken.replace("Bearer ", "")
-
-    const isVerified = jwt.verify(accessToken, JWT_SECRET_KEY)
-
-    if (!isVerified) {
-        return res.sendStatus(401)
+    try {
+        jwt.verify(accessToken, JWT_SECRET_KEY)
+    } catch (error) {
+        next({
+            status: 401,
+            message: error.message
+        }) 
     }
+
 
     const payload = jwt.decode(accessToken)
 
