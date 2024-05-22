@@ -35,6 +35,12 @@ module.exports = async (req, res, next) => {
         return res.sendStatus(401)
     }
 
+    if (!user.is_verified) {
+        return res.status(401).json({
+            message: "your account is not activated yet, please check your activation link on your email, or contact the customer care"
+        })
+    }
+
     req.user = user;
     return next();
 
