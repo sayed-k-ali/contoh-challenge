@@ -23,7 +23,10 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     fullname: DataTypes.STRING,
     is_admin: DataTypes.BOOLEAN,
-    is_verified: DataTypes.BOOLEAN,
+    is_verified: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
   }, {
     sequelize,
     modelName: 'User',
