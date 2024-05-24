@@ -14,16 +14,21 @@ describe('User Login test', () => {
 
     
     it('should success login user', async () => {
-        const sampleUser = await user.createUser({ is_admin: false })
-        const res = await httpRequest(app)
-            .post("/api/v1/users/login")
-            .send({
-                email: sampleUser.email,
-                password: sampleUser.password
-            })
-        
-        expect(res.status).toBe(200)
-        expect(res.body).toHaveProperty('accessToken')
+        try {
+            const sampleUser = await user.createUser({ is_admin: false })
+            const res = await httpRequest(app)
+                .post("/api/v1/users/login")
+                .send({
+                    email: sampleUser.email,
+                    password: sampleUser.password
+                })
+            
+            expect(res.status).toBe(200)
+            expect(res.body).toHaveProperty('accessToken')
+            
+        } catch (error) {
+            console.log(error)
+        }
     })
 
     

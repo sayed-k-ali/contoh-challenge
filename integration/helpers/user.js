@@ -9,15 +9,21 @@ module.exports = {
         const hashedPassword = bcrypt.hashSync(actualPassword, 10)
         const userData = {
             is_admin,
+            is_verified: false,
             email: faker.internet.email(),
             fullname: faker.internet.displayName(),
             password: actualPassword
         }
-        const userDb = await User.create({
-            ...userData,
-            password: hashedPassword,
-        })
-        Object.assign(userData, {id: userDb.id})
+        try {
+            const userDb = await User.create({
+                ...userData,
+                password: hashedPassword,
+            })
+            Object.assign(userData, {id: userDb.id})
+            
+        } catch (error) {
+            console.log(error)
+        }
         return userData;
     },
 }

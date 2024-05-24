@@ -10,7 +10,12 @@ const user = require('./helpers/user')
 
 describe('User Registration test', () => {
     beforeAll(async () => {
-        await sequelize.sync({force: true})
+        try {
+            await sequelize.sync({force: true})
+        } catch (error) {
+            console.log(error)   
+            process.exit(1)
+        }
     })
 
     it('should success register user', async () => {

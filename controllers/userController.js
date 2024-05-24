@@ -82,9 +82,11 @@ const register = async (req, res, next) => {
             text: 'please activate your account use this link: http://localhost:3000/api/v1/users/activate?token=' + activationToken
         }
         
-        mailTransport.sendMail(emailParams)
-            .then((success) => logger.info(success, "email sent to %s", email))
-            .catch((fail) => logger.error(fail))
+        if (process.env.NODE_ENV !== 'test') {
+            mailTransport.sendMail(emailParams)
+                .then((success) => logger.info(success, "email sent to %s", email))
+                .catch((fail) => logger.error(fail))
+        }
 
         return res.json({
             message: "User registration successfully",
