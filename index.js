@@ -8,11 +8,17 @@ const server = http.createServer(app)
 
 const port = process.env.PORT || 3000;
 
-server.listen(port, () => logger.info(null, "server listen on port %d", port))
+const listener = server.listen(port, () => logger.info(null, "server listen on port %d", port))
 
+const { Server } = require('socket.io')
+const { socketController } = require('./controllers')
+
+const io = new Server(listener)
+
+socketController.setup(io)
 
 process.on('SIGINT', () => {
-    server.close((err) => {
+    listener.close((err) => {
         if (err) {
             logger.error(err)
             process.exit(1)
@@ -25,7 +31,7 @@ process.on('SIGINT', () => {
 
 
 process.on('SIGTERM', () => {
-    server.close((err) => {
+    listener.close((err) => {
         if (err) {
             logger.error(err)
             process.exit(1)
