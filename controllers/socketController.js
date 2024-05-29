@@ -19,13 +19,11 @@ const setup = (io) => {
     socket.handshake.user = user;
 
     //store costumer socket information with key-value format
-    if (user.role === "costumer") {
-      connectedUsers[user.user_id] = socket;
-    }
-
-    //store admin socket information to array
-    if (user.role === "admin") {
-      connectedAdmins.push(socket);
+    if (!user.is_admin) {
+      connectedUsers[user.id] = socket;
+    }else{
+        //store admin socket information to array
+        connectedAdmins.push(socket);
     }
 
     //send message to connected client when admin available
@@ -40,8 +38,8 @@ const setup = (io) => {
     socket.on("chat-admin", function (data) {
       //if theres no admin subscribe to the event
       if (connectedAdmins.length < 1) {
-        standByCostumers = standByCostumers.filter((id) => id !== socket.handshake.user.user_id);
-        standByCostumers.push(socket.handshake.user.user_id);
+        standByCostumers = standByCostumers.filter((id) => id !== socket.handshake.user.id);
+        standByCostumers.push(socket.handshake.user.id);
         return socket.emit("chat-user", { message: "There is no admin online, wait for a while..." });
       }
       while (standByCostumers.length > 0) {
@@ -49,14 +47,14 @@ const setup = (io) => {
       }
 
       //send message to connected admin
-      connectedAdmins.forEach((sc) => sc.emit("chat-admin", { user_id: socket.handshake.user.user_id, message: data.message }));
+      connectedAdmins.forEach((sc) => sc.emit("chat-admin", { id: socket.handshake.user.id, message: data.message }));
     });
 
     //event listener for send message to costumer
     socket.on("chat-user", function (data) {
       const { to, message } = data;
 
-      //send message base on user_id
+      //send message base on id
       if (connectedUsers[to]) {
         connectedUsers[to].emit("chat-user", { message });
       }
@@ -65,17 +63,17 @@ const setup = (io) => {
     socket.on("disconnect", function () {
       if (socket.handshake.user.role === "costumer") {
         //remove disconnected socket from memory
-        delete connectedUsers[socket.handshake.user.user_id];
+        delete connectedUsers[socket.handshake.user.id];
 
         //send message to admin connected when costumer terminate connection
         connectedAdmins.forEach((socket) =>
-          socket.emit("chat-admin", { messages: `costumer with id: ${socket.handshake.user.user_id} leave chat!` })
+          socket.emit("chat-admin", { messages: `costumer with id: ${socket.handshake.user.id} leave chat!` })
         );
       }
 
       if (socket.handshake.user.role === "admin") {
         //remove disconnected socket from memory
-        connectedAdmins = connectedAdmins.filter((admin) => admin.user_id == socket.handshake.user.user_id);
+        connectedAdmins = connectedAdmins.filter((admin) => admin.id == socket.handshake.user.id);
       }
     });
   });

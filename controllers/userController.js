@@ -38,7 +38,7 @@ const login = async (req, res) => {
         name: isUserExist.fullname,
         is_admin: isUserExist.is_admin
     }, JWT_SECRET_KEY, {
-        expiresIn: '15m'
+        expiresIn: '1d'
     })
 
     return res.json({ accessToken })
