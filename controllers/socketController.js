@@ -53,7 +53,6 @@ const setup = (io) => {
     //event listener for send message to costumer
     socket.on("chat-user", function (data) {
       const { to, message } = data;
-
       //send message base on id
       if (connectedUsers[to]) {
         connectedUsers[to].emit("chat-user", { message });
@@ -61,7 +60,7 @@ const setup = (io) => {
     });
 
     socket.on("disconnect", function () {
-      if (socket.handshake.user.role === "costumer") {
+      if (!socket.handshake.user.is_admin) {
         //remove disconnected socket from memory
         delete connectedUsers[socket.handshake.user.id];
 
@@ -69,9 +68,7 @@ const setup = (io) => {
         connectedAdmins.forEach((socket) =>
           socket.emit("chat-admin", { messages: `costumer with id: ${socket.handshake.user.id} leave chat!` })
         );
-      }
-
-      if (socket.handshake.user.role === "admin") {
+      } else {
         //remove disconnected socket from memory
         connectedAdmins = connectedAdmins.filter((admin) => admin.id == socket.handshake.user.id);
       }
